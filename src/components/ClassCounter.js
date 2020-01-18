@@ -4,21 +4,36 @@ class ClassCounter extends Component {
   constructor(props) {
     super(props);
 
-    this.tate = {
-      count: 0
+    this.state = {
+      count: 0,
+      name: ''
     };
   }
 
-  incrementCount = () => {
-    this.setState({
-      count: this.state.count + 1
-    });
-  };
+  componentDidMount() {
+    document.title = `Clicked ${this.state.count} times`;
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+
+    if(prevState.count !== this.state.count) {
+      console.log('updating document');
+      document.title = `Clicked ${this.state.count} times`;
+    }
+
+  }
+
+  // incrementCount = () => {
+  //   this.setState({
+  //     count: this.state.count + 1
+  //   });
+  // };
 
   render() {
     return (
       <div>
-        <button onClick={this.incrementCount}>{this.state.count}</button>
+        <input type="text" value={this.state.name} onChange={e => {this.setState({name: e.target.value})}} />
+        <button onClick={() => this.setState({count: this.state.count + 1})}>Click {this.state.count} times</button>
       </div>
     );
   }
